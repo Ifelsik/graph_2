@@ -50,8 +50,8 @@ int appendToFile(char *path, char *text) {
     int status = 0;
     file_p = fopen(path, "a+");
     if (NULL == file_p) {
-        fclose(file_p);
-        return 1;
+        fprintf(stderr, "ERROR: Can't open file %s\n", path);
+        exit(EXIT_FAILURE);
     }
     status = fputs(text, file_p);
     if (status == EOF) {
@@ -62,9 +62,7 @@ int appendToFile(char *path, char *text) {
     return 0;
 }
 
-/*
- 
- */
+
 char** readLinesFromFile(char *path) {
     FILE *file_p = NULL;
     char *filebuf = NULL;
@@ -72,7 +70,10 @@ char** readLinesFromFile(char *path) {
     int number_of_lines = 0;
     file_p = fopen(path, "r");
     
-    assert(file_p != NULL);
+    if (NULL == file_p) {
+        fprintf(stderr, "ERROR: Can't open file %s\n", path);
+        exit(EXIT_FAILURE);
+    }
 
     filebuf = readFile(path);
     for (int i = 0; filebuf[i] != '\0'; i++) {
@@ -81,11 +82,20 @@ char** readLinesFromFile(char *path) {
     }
 
     lines = (char**) malloc(sizeof (char*) * number_of_lines);
+    if (NULL == lines) {
+        fputs("ERROR: Can't allocate memory for 'lines'", stderr); //rm
+        exit(EXIT_FAILURE);
+    }
     for (int i = 0; i < number_of_lines; i++) {
         int base_len = BASE_LEN;
         int line_length = 0;
         int c = 0;
         lines[i] = (char*) malloc(sizeof(char) * base_len);
+        if (NULL == lines[i]) {
+            fputs("ERROR: Can't allocate memory for 'lines[i]'", stderr); //rm
+            fclose(file_p);
+            exit(EXIT_FAILURE);
+        }
         while ((c = fgetc(file_p)) != '\n' && c != EOF) {
             lines[i][line_length] = (char) c;
             line_length++;
@@ -93,8 +103,9 @@ char** readLinesFromFile(char *path) {
                 base_len *= 2;
                 lines[i] = (char*) realloc(lines[i], base_len);
                 if (NULL == lines[i]) {
+                    fputs("ERROR: Can't reallocate memory for 'lines[i]'", stderr);
                     fclose(file_p);
-                    exit(2);
+                    exit(EXIT_FAILURE);
                 }
             }
         }

@@ -6,7 +6,7 @@ AdjacencyMatrix* initGraph(int size, int **matrix) {
     AdjacencyMatrix *graph_p = (AdjacencyMatrix *) malloc(sizeof(AdjacencyMatrix));
     if (graph_p == NULL) {
         fprintf(stderr, "ERROR occured during allocate memory in function 'initGraph'\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     graph_p->size = size;
     graph_p->vertices = matrix;
@@ -22,7 +22,7 @@ void showGraph(AdjacencyMatrix *graph_p) {
     file_p = fopen("./graph.txt", "w");
     if (file_p == NULL) {
         puts("Error in function showGraph: file doesn't exist");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     
     fputs(template, file_p);

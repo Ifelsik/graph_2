@@ -6,8 +6,8 @@ SRC_DIR=./src
 graph: main.o file.o matrix_parser.o graph.o
 	$(CC) $(CFLAGS) main.o file.o matrix_parser.o graph.o -o graph
 
-main.o: $(SRC_DIR)/main.c
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/main.c
+main.o: main.c
+	$(CC) $(CFLAGS) -c main.c
 
 file.o: $(SRC_DIR)/file.c
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/file.c
