@@ -1,6 +1,18 @@
 #include "../include/graph.h"
 #include "../include/file.h"
 
+
+AdjacencyMatrix* initGraph(int size, int **matrix) {
+    AdjacencyMatrix *graph_p = (AdjacencyMatrix *) malloc(sizeof(AdjacencyMatrix));
+    if (graph_p == NULL) {
+        fprintf(stderr, "ERROR occured during allocate memory in function 'initGraph'\n");
+        exit(1);
+    }
+    graph_p->size = size;
+    graph_p->vertices = matrix;
+    return graph_p;
+}
+
 void showGraph(AdjacencyMatrix *graph_p) {
     FILE *file_p = NULL;
     char *template = NULL;

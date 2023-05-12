@@ -7,9 +7,7 @@ int main() {
 
     matrix = readLinesFromFile(path);
     
-    graph = (AdjacencyMatrix*) malloc(sizeof(AdjacencyMatrix));
-    graph->size = getMatrixSize(matrix);
-    graph->vertices = parseSquareMatrix(matrix);
+    graph = initGraph(getMatrixSize(matrix), parseSquareMatrix(matrix));
 
     if (isConnectedGraph(graph))
         puts("Graph is connected");

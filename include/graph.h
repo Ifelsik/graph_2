@@ -8,6 +8,8 @@ typedef struct {
     int **vertices;
 } AdjacencyMatrix;
 
+AdjacencyMatrix* initGraph(int size, int **matrix);
+
 void showGraph(AdjacencyMatrix *graph_p);
 
 bool isConnectedGraph(AdjacencyMatrix *graph_p);
