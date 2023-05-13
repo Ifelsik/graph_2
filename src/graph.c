@@ -5,7 +5,7 @@
 AdjacencyMatrix* initGraph(int size, int **matrix) {
     AdjacencyMatrix *graph_p = (AdjacencyMatrix *) malloc(sizeof(AdjacencyMatrix));
     if (graph_p == NULL) {
-        fprintf(stderr, "ERROR occured during allocate memory in function 'initGraph'\n");
+        fputs("ERROR in function 'initGraph': Can't allocate memory", stderr);
         exit(EXIT_FAILURE);
     }
     graph_p->size = size;
@@ -16,22 +16,23 @@ AdjacencyMatrix* initGraph(int size, int **matrix) {
 void showGraph(AdjacencyMatrix *graph_p) {
     FILE *file_p = NULL;
     char *template = NULL;
+    char *path = "./graph.txt";
 
     template = readFile("./files/dot_template.txt");
 
-    file_p = fopen("./graph.txt", "w");
+    file_p = fopen(path, "w");
     if (file_p == NULL) {
-        puts("Error in function showGraph: file doesn't exist");
+        fprintf(stderr, "ERROR in function 'showGraph': file doesn't exist at this path %s\n", path);
         exit(EXIT_FAILURE);
     }
     
     fputs(template, file_p);
 
     for (int i = 0; i < graph_p->size; i++) {
-        for (int j = 0; j <= i; j++) {
+        for (int j = 0; j < graph_p->size; j++) {
             if (graph_p->vertices[i][j] != 0)
-                fprintf(file_p, "%d -- %d[label=\"%.2f\"]\n", i, j,
-                        (float) graph_p->vertices[i][j]); 
+                fprintf(file_p, "%d -> %d[label=\"%.2f\"]\n", i, j,
+                        (float) graph_p->vertices[i][j]);
         }
     }
     putc('}', file_p);

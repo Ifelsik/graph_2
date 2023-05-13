@@ -11,7 +11,7 @@ char* readFile(char *path) {
     FILE *file_p = NULL;
     char *filebuf = NULL;
     int file_size = 0;
-    char c = 0;
+    // char c = 0;
     file_p = fopen(path, "rb");
     assert(file_p != NULL);
 
@@ -23,19 +23,18 @@ char* readFile(char *path) {
         fclose(file_p);
         exit(2);
     }
-    /* Doesn't work in Windows!!!
-    fread(*filebuf, sizeof(char), file_size, file_p);
-    fclose(file_p);
-     */
+    // Doesn't work in Windows!!!
+    fread(filebuf, sizeof(char), file_size, file_p);
+     
     // For win
-    for (int i = 0; i < file_size; i++) {
-        c = (char) fgetc(file_p);
-        if (c != '\r')
-            filebuf[i] = c;
-        else
-            filebuf[i] = ' ';
-    }
-    filebuf[file_size] = '\0';
+    // for (int i = 0; i < file_size; i++) {
+    //     c = (char) fgetc(file_p);
+    //     if (c != '\r')
+    //         filebuf[i] = c;
+    //     else
+    //         filebuf[i] = ' ';
+    // }
+    // filebuf[file_size] = '\0';
     //
     
     fclose(file_p);

@@ -17,12 +17,12 @@ int getMatrixSize(char **matrix) {
 
     row = (char*) malloc(sizeof(char) * row_len);
     if (NULL == row) {
-        fprintf(stderr, "ERROR: can't allocate memory for 'row'\n");
+        fputs("ERROR: can't allocate memory for 'row", stderr);
         exit(1);
     }
     mcpy = (char*) malloc(sizeof(char) * row_len);
     if (NULL == mcpy) {
-        fprintf(stderr, "ERROR: can't allocate memory for 'mcpy'\n");
+        fputs("ERROR: can't allocate memory for 'mcpy'", stderr);
         exit(1);
     }
     strcpy(mcpy, *matrix);
@@ -43,7 +43,7 @@ int** parseSquareMatrix(char **matrix) {
     
     parsed_matrix = (int**) malloc(sizeof(int*) * matrix_size);
     if (NULL == parsed_matrix) {
-        fprintf(stderr, "ERROR: can't allocate memory for 'parsed matrix'\n");
+        fputs("ERROR in function 'parseSquareMatrix': can't allocate memory for 'parsed matrix'", stderr);
         exit(1);
     }
 
@@ -52,7 +52,7 @@ int** parseSquareMatrix(char **matrix) {
     }
 
     if (matrix == NULL || *matrix == NULL) {
-        fprintf(stderr, "ERROR: 'matrix' is empty\n");
+        fputs("ERROR in function 'parseSquareMatrix': 'matrix' is empty", stderr);
         exit(1);
     }
 
@@ -61,14 +61,14 @@ int** parseSquareMatrix(char **matrix) {
         int j = 0;
         parsed_matrix[i] = (int*) malloc(sizeof(int) * matrix_size);
         if (NULL == parsed_matrix[i]) {
-            fprintf(stderr, "ERROR: can't allocate memory for 'parsed_matrix[i]'\n");
+            fputs("ERROR in function 'parseSquareMatrix': can't allocate memory for 'parsed_matrix[i]'", stderr);
             exit(1);
         }
 
         row = (char*) malloc(sizeof(char) * row_len);
         matrix_row_copy = (char*) malloc(sizeof(char) * row_len);
         if (NULL == matrix_row_copy) {
-            fprintf(stderr, "ERROR: can't allocate memory for 'matrix_row_copy'\n");
+            fputs("ERROR in function 'parseSquareMatrix': can't allocate memory for 'matrix_row_copy'", stderr);
             exit(1);
         }
 
