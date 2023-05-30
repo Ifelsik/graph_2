@@ -1,7 +1,7 @@
 #include "main.h"
 
 int main() {
-    char *path = "./files/test.txt";
+    char *path = "./files/input.txt";
     char **matrix = NULL;
     AdjacencyMatrix *graph = NULL;
 
@@ -14,8 +14,10 @@ int main() {
     else
         puts("Graph is disconected");
 
-    showGraph(graph);
-    
+    showGraph(graph, "graph_before.png");
+    graph = rm_edgeGraph(graph, 0, 1);
+    showGraph(graph, "graph_after.png");
+
     delGraph(&graph);
     return 0;
 }

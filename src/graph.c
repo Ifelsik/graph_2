@@ -13,10 +13,12 @@ AdjacencyMatrix* initGraph(int size, int **matrix) {
     return graph_p;
 }
 
-void showGraph(AdjacencyMatrix *graph_p) {
+void showGraph(AdjacencyMatrix *graph_p, char *img_path) {
     FILE *file_p = NULL;
     char *template = NULL;
+    char *cmd = NULL;
     char *path = "./graph.txt";
+    int cmd_len = 128;
 
     template = readFile("./files/dot_template.txt");
 
@@ -38,7 +40,17 @@ void showGraph(AdjacencyMatrix *graph_p) {
     putc('}', file_p);
 
     fclose(file_p);
-    system("dot -Tpng > graph_visualization.png < graph.txt");
+
+    cmd = (char*) malloc(sizeof(char) * cmd_len);
+    if (cmd == NULL) {
+        fprintf(stderr, "ERROR in function 'showGraph': memory allocation error for cmd\n");
+        exit(EXIT_FAILURE);
+    }
+    sprintf(cmd, "dot -Tpng > %s < graph.txt", img_path);
+
+    system(cmd);
+
+    free(cmd);
 }
 
 void dfsGraph(AdjacencyMatrix *graph_p, bool *visited, int start_vertex) {
@@ -67,3 +79,20 @@ void delGraph(AdjacencyMatrix  **graph_pp) {
     free(*graph_pp);
     *graph_pp = NULL;
 }
+
+ AdjacencyMatrix* rm_edgeGraph(AdjacencyMatrix* graph_p,
+                               int vert_from,
+                               int vert_to) {
+    if (vert_from >= graph_p->size || vert_to >= graph_p->size) {
+        fputs("These vertices even doesn't exist\n", stderr);
+        exit(EXIT_FAILURE);
+    }
+    if (!graph_p->vertices[vert_from][vert_to]) {
+        puts("Such edge doesn't exist");
+        return graph_p;
+    }
+
+    graph_p->vertices[vert_from][vert_to] = 0;
+    puts("This edge succesfully deleted!");
+    return graph_p;
+ }

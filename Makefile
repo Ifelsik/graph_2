@@ -19,4 +19,4 @@ graph.o: $(SRC_DIR)/graph.c
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/graph.c
 
 clean:
-	rm -rf *.o graph_visualization.png graph.txt graph
+	rm -rf *.o *.png graph.txt graph
